@@ -77,9 +77,13 @@ REST stands for *Representational State Transfer* and API stands for *Applicatio
 - Code-on-deman
 - Statelessness
 
+### How do we meassure API?
 
+<img src="https://dev-to-uploads.s3.amazonaws.com/i/aregpuzds2v57k4shgpa.PNG">
 
+#### Richardson Maturity Model
 
-
-
+- https://restfulapi.net/richardson-maturity-model/
+- https://blog.restcase.com/4-maturity-levels-of-rest-api-design/
+- https://martinfowler.com/articles/richardsonMaturityModel.html
 

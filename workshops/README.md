@@ -87,3 +87,232 @@ REST stands for *Representational State Transfer* and API stands for *Applicatio
 - https://blog.restcase.com/4-maturity-levels-of-rest-api-design/
 - https://martinfowler.com/articles/richardsonMaturityModel.html
 
+### Partial Response
+
+partial response is a method that lets api users to choose what information they want in the response.
+
+```py
+GET - http://127.0.0.1:8000/api/v1/products?fields=name,photo,price
+```
+
+#### Benefits
+
+- Reduce bandwidth wage
+- Improved Performance
+- Optimized client-side performance
+- Simplified API Consumption
+- Reduced over-fetching
+
+#### Query Parameters
+
+Query parameters are a fundamental aspect of HTTP requests used to specify additional information for a resource retrieval or manipulation operation. They are appended to the URL of the request and consist of a key-value pair separated by an equal sign (=) and delimited by an ampersand (&) if multiple parameters are present.
+
+- filtering: `?min_price=600&max_price=1200`
+- Sorting: `?sort=price&order=desc`
+- Searching: `?search=iphone`
+- Pagination: `?limit=10&offset=1`
+- Partial Fields: `?fields=name,product,price`
+
+#### Well structured response body
+
+##### GET
+
+```py
+{
+	"status": 200,
+	"message": "",
+	"information": "",
+	"data": {
+		"id": "uuid",
+		"links": {
+			"self": ...,
+			"update": ...,
+			"delete": ...,
+			"add_to_cart": ...
+		}
+	},
+	"trace_id": "456789"
+}
+```
+
+##### POST
+
+```py
+{
+	"status": 201,
+	"message": "Created Successfully",
+	"data": {
+			"id": "uuid",
+			"links": {
+				"update": ...,
+				"delete": ...,
+				"get": ...,
+				"self": ...
+			}
+		},
+	"trace_id": "789"
+}
+```
+
+##### GET all Products
+
+```py
+"status": 200,
+"message": "",
+"information": "",
+"data": [
+	{
+		"id": "uuid",
+		"links": {
+			"self": ...,
+		}
+	},
+	{
+
+	}
+],
+"pagination": {
+		"offset": 5,
+		"limit": 2,
+		"total_pages": 20,
+		"total_items": 100,
+		"links": [
+			"self": ...,
+			"first": ...,
+			"last": None,
+			"prev": 1,
+			"next": 3
+		]
+	}
+```
+
+### Error Response
+
+- Use standard http status code
+	- 400 - Bad request
+	- 401 - Unauthorized
+	- 403 - Forbidden
+	- 404 - Not found
+	- 422 - Unprocessable Entity
+	- 500 - Internal server error
+- Provide descriptive error message
+- Follow a consistent error message
+- Include error details
+- Follow a consistent error format
+- Include error details
+- Handle uncaught exceptions gracefully
+- Offer guidance for recovery
+- Response body should includes
+	- code
+	- message
+	- hints
+	- trace_id
+
+```py
+{
+	"message": ...,
+	"errors": [],
+	"hints": "",
+	"trace_id": "124588"
+}
+```
+
+### HTTP Cache-Control
+
+![cache](https://i.ibb.co/wsV27C4/image.png)
+
+#### Directives
+
+- Max-Age: Specifies the maximum time (in seconds) that a response can be cached by the client or intermediary caches.
+	- For example, **Cache-Control: max-age=3600** indicates that the response can be cached for up to one hour.
+- S-Max-Age: Similar to max-age, but applies only to shared caches (e.g., proxies). It overrides the max-age directive for shared caches.
+	- For example, **Cache-Control: s-maxage=3600** specifies that shared caches can cache the response for one hour.
+- No-Cache: Indicates that a response can be cached by the client or intermediary caches, but must be revalidated with the server before each use. It does not prevent caching but requires validation of the cached response's freshness. For example, **Cache-Control: no-cache**.
+- No-Store: Specifies that a response should not be stored in any cache, including browser caches and intermediary caches. It instructs clients to fetch the response from the server for each request. For example, **Cache-Control: no-store**. Sensitive data should not be stored anywhere (e.g., Banking data, Medical record)
+
+#### Public Cache
+
+Specifies that a response can be cached by any cache, including both private (client-side) caches and shared caches (e.g., proxies).Sensitive data should not be cached.  
+For example, Cache-Control: public.
+
+![public](https://i.ibb.co/G3DqJK4/image.png)
+
+#### Private Cache
+
+Indicates that a response can be cached by the client's browser but not by shared caches. It is typically used for responses intended for a specific user or client.  
+For example, Cache-Control: private.
+
+![private](https://i.ibb.co/qRDYqSm/image.png)
+
+### Etag Header
+
+The Etag (Entity Tag) header is an HTTP response header that provides a mechanism for web servers to assign a unique identifier to a specific version of a resource. Etags are used for cache validation and conditional requests, allowing clients to determine whether their cached representation of a resource is still valid without having to download the entire resource again from the server.
+
+The primary purpose of the Etag header is to provide a lightweight and efficient way to validate cached responses and reduce unnecessary data transfer
+
+#### Steps
+
+- Etag Generation: When a client creates a new resource server generates an Etag value for the current version of the resource.
+- Inclusion in Response: Server includes the Etag value in response headers using Etag header.
+- Storage by Client: The client save (cache, local storage) the response along with the Etag value for future reference.
+- Conditional Requests: When the client makes a subsequent request for the resource, it includes the stored Etag value in the `If-None-Match` header of the request. For example: `If-None-Match: "abcdef123456"`
+- Validation by Server: Upon receiving the request, server compares the Etag value provided by the client with the current Etag value of the resource. If the Etag values match, it indicates that the cached representation is still valid, and the server responds with a `304 Not Modified` status code, indicating that the client should use its cached copy. If the Etag values do not match, the server responds with the full resource content, along with a new Etag value for the updated version.
+
+![Etag](https://i.ibb.co/WnZbYQM/Capture3.png)
+
+### REST API Versioning
+
+REST API versioning helps to iterate faster when the required, breaking or non-breaking, changes are identified.
+
+#### Benefits
+
+- Backward Compatiability
+- Incremental Updates
+- Flexiability
+- Maintainability
+- Documentation and Communication
+
+#### Examples of Breaking Change
+
+- Changing the URI structure of an existing API endpoint
+	- Before: `GET /api/v1/product/{id}`
+	- After: `GET /api/v1/products/{id}`
+	- This change could break existing client implementations that rely on the
+old URI structure, causing requests to fail with `404 Not Found` errors.
+- Modifying the behavior of existing API methods or endpoints in a way that affects client applications.
+
+#### Versioning of Breaking Change
+
+- URL Based
+- Header Based
+
+#### Examples of Non-breaking Change
+
+- Adding a new endpoints
+- Optimizing Performance
+- Adding a new field to the product representation
+
+```py
+# Before
+{
+	"id": "123456",
+	"name": "Iphone 15"
+}
+# After
+{
+	"id": "123456",
+	"name": "Iphone 15",
+	"color": "grey"
+}
+```
+
+#### Best Practices of Handling API Changes
+
+- Versioning strategy
+	- URL
+	- Header
+- API Documentation
+- Backward Compatibility
+- Graceful Deprication
+- Monitoring & Feedback
+

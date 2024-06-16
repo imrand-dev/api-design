@@ -10,7 +10,7 @@ API is a contract between 2 parties.
 - SOAP
 - REST
 - gRPC
-- Webhook
+- Web hook
 - GraphQL
 
 ### Why API design is important?
@@ -61,23 +61,23 @@ Step 4: Document the API
 
 REST stands for *Representational State Transfer* and API stands for *Application Programming Interface*. It's an architectural style for networked applications, defining principles for resource identification, addressing, and data exchange between clients and servers via HTTP.
 
-- A resource is any data object or entity that can be accessed or manipulated through rest api.
+- A resource is any data object or entity that can be accessed or manipulated through rest API.
 - Representational state - it represents the current state of the resources. Representation can be XML, JSON etc
 
 ### Constraints of REST API
 
 - Client-Server
-- Cacheability (cache contrl header)
+- Cacheability (cache control header)
 - Uniform Interface
 	- Identification of resources
 	- Manipulation of resources through representations
 	- Self descriptive messages
 	- HATEOAS
 - Layered System
-- Code-on-deman
+- Code-on-demand
 - Statelessness
 
-### How do we meassure API?
+### How do we measure API?
 
 <img src="https://dev-to-uploads.s3.amazonaws.com/i/aregpuzds2v57k4shgpa.PNG">
 
@@ -89,7 +89,7 @@ REST stands for *Representational State Transfer* and API stands for *Applicatio
 
 ### Partial Response
 
-partial response is a method that lets api users to choose what information they want in the response.
+partial response is a method that lets API users to choose what information they want in the response.
 
 ```py
 GET - http://127.0.0.1:8000/api/v1/products?fields=name,photo,price
@@ -188,12 +188,12 @@ Query parameters are a fundamental aspect of HTTP requests used to specify addit
 
 ### Error Response
 
-- Use standard http status code
+- Use standard HTTP status code
 	- 400 - Bad request
 	- 401 - Unauthorized
 	- 403 - Forbidden
 	- 404 - Not found
-	- 422 - Unprocessable Entity
+	- 422 - Unprocessable Content
 	- 500 - Internal server error
 - Provide descriptive error message
 - Follow a consistent error message
@@ -227,7 +227,7 @@ Query parameters are a fundamental aspect of HTTP requests used to specify addit
 	- For example, **Cache-Control: max-age=3600** indicates that the response can be cached for up to one hour.
 - S-Max-Age: Similar to max-age, but applies only to shared caches (e.g., proxies). It overrides the max-age directive for shared caches.
 	- For example, **Cache-Control: s-maxage=3600** specifies that shared caches can cache the response for one hour.
-- No-Cache: Indicates that a response can be cached by the client or intermediary caches, but must be revalidated with the server before each use. It does not prevent caching but requires validation of the cached response's freshness. For example, **Cache-Control: no-cache**.
+- No-Cache: Indicates that a response can be cached by the client or intermediary caches, but must be re-validated with the server before each use. It does not prevent caching but requires validation of the cached response's freshness. For example, **Cache-Control: no-cache**.
 - No-Store: Specifies that a response should not be stored in any cache, including browser caches and intermediary caches. It instructs clients to fetch the response from the server for each request. For example, **Cache-Control: no-store**. Sensitive data should not be stored anywhere (e.g., Banking data, Medical record)
 
 #### Public Cache
@@ -266,9 +266,9 @@ REST API versioning helps to iterate faster when the required, breaking or non-b
 
 #### Benefits
 
-- Backward Compatiability
+- Backward Compatibility
 - Incremental Updates
-- Flexiability
+- Flexibility
 - Maintainability
 - Documentation and Communication
 
@@ -313,6 +313,99 @@ old URI structure, causing requests to fail with `404 Not Found` errors.
 	- Header
 - API Documentation
 - Backward Compatibility
-- Graceful Deprication
+- Graceful Deprecation
 - Monitoring & Feedback
 
+### REST API Specification
+
+The "REST API Specification" ensures that there is a clear and well-defined contract between these two parties, In the "REST API Specification," we follow two types of contracts:
+
+- Contract-last, also known as the Code-first approach. 
+- Contract-first, also known as the Design-first approach.
+
+### Open API Specification
+
+- [OpenAPI Specification v3.1.0](https://spec.openapis.org/oas/latest.html)
+- [Swagger Editor](https://editor.swagger.io/)
+
+### REST API Security
+
+API security is the practice of preventing and mitigating attacks that originate at the API level and it is a crucial pillar of any organization's overall security.
+
+#### Common API Threats and Vulnerabilities
+
+- Poor security hygiene
+- Authentication & Authorization Vulnerabilities
+- Lack of read and write granularity
+- Failure to implement quotas and throttling
+- Improperly set or missing HTTP headers
+- Failure to perform input validation, sanitation and encoding in the method level
+
+#### How to secure REST API?
+
+- Authentication
+	- Basic authentication
+	- Session Authentication
+	- JWT
+	- API Key
+	- Oauth 2.0
+		- Grant types
+			- Authorization code
+			- Implicit grand
+			- Authorization code grant with proof key for code exchange
+			- Resource owner credentials
+			- Client credentials
+			- Device authorization flow
+			- Refresh token grant
+- Authorization
+- Input validation and sanitation
+- Rate limiting
+- Security headers
+- Logging and continuous monitoring
+
+### Access Control Best Practices
+
+- Implement RBAC
+- Throttle requests
+- Use HTTPs
+- Use UUID over incremental ID
+
+### Input Data Validation
+
+- Use Proper HTTP Methods
+- Validate Content-type on request header
+- Validate & sanitize request body
+- Avoid sending sensitive data in the query parameters
+- Use only secure server side encryption.
+
+### Security Headers
+
+- Content-Security-Policy: A powerful allow-list of what can happen on your page which mitigates many attacks Cross-Origin-Opener-Policy: Helps process-isolate your page
+- Cross-Origin-Resource-Policy: Blocks others from loading your resources cross-origin
+- Origin-Agent-Cluster: Changes process isolation to be origin-based
+- Referrer-Policy: Controls the Referer header
+- Strict-Transport-Security: Tells browsers to prefer HTTPS
+- X-Content-Type-Options: Avoids MIME sniffing
+- X-DNS-Prefetch-Control: Controls DNS prefetching
+- X-Download-Options: Forces downloads to be saved (Internet Explorer only)
+- X-Frame-Options: Legacy header that mitigates clickjacking attacks
+- X-Permitted-Cross-Domain-Policies: Controls cross-domain behavior for Adobe products, like Acrobat
+- X-Powered-By: Info about the web server. Remove because it could be used in simple attacks
+- X-XSS-Protection: Legacy header that tries to mitigate XSS attacks, but makes things worse, so Helmet disables it
+
+### API Management
+
+API management is the organized control of APIs throughout their life cycle, including design, deployment, security, monitoring and monetization.
+
+- Design
+- Development
+- Deployment
+- API monitoring and analytics
+- Documentation and developer portals
+- Life cycle management
+- Monetization & Billing
+
+2 types of API management tools
+
+- Proxy-Based
+- Agent-Based

@@ -5,7 +5,7 @@ API is a contract between 2 parties.
 - Consumer
 - Producer
 
-### API architectural style
+### API Architectural Style
 
 - SOAP
 - REST
@@ -13,7 +13,7 @@ API is a contract between 2 parties.
 - Web hook
 - GraphQL
 
-### Why API design is important?
+### Why API Design is important?
 
 - Interoperability
 - Abstraction
@@ -22,14 +22,14 @@ API is a contract between 2 parties.
 - Developer Experience
 - Security & Reliability
 
-### Well structured Public APIs
+### Public Docs
+
+> API first approach priorities APIs at the beginning of the software development process.
 
 - https://woocommerce.github.io/woocommerce-rest-api-docs/
 - https://docs.github.com/en/rest/
 
-> API first approach priorities APIs at the beginning of the software development process.
-
-### Different types of API consumers
+### Different types of API Consumers
 
 - Public
 - Private
@@ -39,7 +39,7 @@ API is a contract between 2 parties.
 
 ![api-life-cycle](https://voyager.postman.com/infographics/producer-consumer-api-lifecycle-postman.png)
 
-### What is API Design?
+## What is API Design?
 
 API design is the process of making intentional decisions about how an API will expose data and functionality to its consumers. A successful API design describes the API endpoints, methods, and resources in a standardized specification format.
 
@@ -103,7 +103,7 @@ GET - http://127.0.0.1:8000/api/v1/products?fields=name,photo,price
 - Simplified API Consumption
 - Reduced over-fetching
 
-#### Query Parameters
+### Query Parameters
 
 Query parameters are a fundamental aspect of HTTP requests used to specify additional information for a resource retrieval or manipulation operation. They are appended to the URL of the request and consist of a key-value pair separated by an equal sign (=) and delimited by an ampersand (&) if multiple parameters are present.
 
@@ -113,9 +113,9 @@ Query parameters are a fundamental aspect of HTTP requests used to specify addit
 - Pagination: `?limit=10&offset=1`
 - Partial Fields: `?fields=name,product,price`
 
-#### Well structured response body
+### Well structured response body
 
-##### GET
+#### GET
 
 ```py
 {
@@ -135,7 +135,7 @@ Query parameters are a fundamental aspect of HTTP requests used to specify addit
 }
 ```
 
-##### POST
+#### POST
 
 ```py
 {
@@ -154,7 +154,7 @@ Query parameters are a fundamental aspect of HTTP requests used to specify addit
 }
 ```
 
-##### GET all Products
+#### GET all Products
 
 ```py
 "status": 200,
@@ -186,7 +186,7 @@ Query parameters are a fundamental aspect of HTTP requests used to specify addit
 	}
 ```
 
-### Error Response
+## Error Response
 
 - Use standard HTTP status code
 	- 400 - Bad request
@@ -217,11 +217,11 @@ Query parameters are a fundamental aspect of HTTP requests used to specify addit
 }
 ```
 
-### HTTP Cache-Control
+## HTTP Cache-Control
 
 ![cache](https://i.ibb.co/wsV27C4/image.png)
 
-#### Directives
+### Directives
 
 - Max-Age: Specifies the maximum time (in seconds) that a response can be cached by the client or intermediary caches.
 	- For example, **Cache-Control: max-age=3600** indicates that the response can be cached for up to one hour.
@@ -230,14 +230,14 @@ Query parameters are a fundamental aspect of HTTP requests used to specify addit
 - No-Cache: Indicates that a response can be cached by the client or intermediary caches, but must be re-validated with the server before each use. It does not prevent caching but requires validation of the cached response's freshness. For example, **Cache-Control: no-cache**.
 - No-Store: Specifies that a response should not be stored in any cache, including browser caches and intermediary caches. It instructs clients to fetch the response from the server for each request. For example, **Cache-Control: no-store**. Sensitive data should not be stored anywhere (e.g., Banking data, Medical record)
 
-#### Public Cache
+### Public Cache
 
 Specifies that a response can be cached by any cache, including both private (client-side) caches and shared caches (e.g., proxies).Sensitive data should not be cached.  
 For example, Cache-Control: public.
 
 ![public](https://i.ibb.co/G3DqJK4/image.png)
 
-#### Private Cache
+### Private Cache
 
 Indicates that a response can be cached by the client's browser but not by shared caches. It is typically used for responses intended for a specific user or client.  
 For example, Cache-Control: private.
@@ -260,11 +260,11 @@ The primary purpose of the Etag header is to provide a lightweight and efficient
 
 ![Etag](https://i.ibb.co/WnZbYQM/Capture3.png)
 
-### REST API Versioning
+## REST API Versioning
 
 REST API versioning helps to iterate faster when the required, breaking or non-breaking, changes are identified.
 
-#### Benefits
+### Benefits
 
 - Backward Compatibility
 - Incremental Updates
@@ -272,7 +272,7 @@ REST API versioning helps to iterate faster when the required, breaking or non-b
 - Maintainability
 - Documentation and Communication
 
-#### Examples of Breaking Change
+### Examples of Breaking Change
 
 - Changing the URI structure of an existing API endpoint
 	- Before: `GET /api/v1/product/{id}`
@@ -281,12 +281,12 @@ REST API versioning helps to iterate faster when the required, breaking or non-b
 old URI structure, causing requests to fail with `404 Not Found` errors.
 - Modifying the behavior of existing API methods or endpoints in a way that affects client applications.
 
-#### Versioning of Breaking Change
+### Versioning of Breaking Change
 
 - URL Based
 - Header Based
 
-#### Examples of Non-breaking Change
+### Examples of Non-breaking Change
 
 - Adding a new endpoints
 - Optimizing Performance
@@ -306,7 +306,7 @@ old URI structure, causing requests to fail with `404 Not Found` errors.
 }
 ```
 
-#### Best Practices of Handling API Changes
+### Best Practices of Handling API Changes
 
 - Versioning strategy
 	- URL
@@ -316,7 +316,7 @@ old URI structure, causing requests to fail with `404 Not Found` errors.
 - Graceful Deprecation
 - Monitoring & Feedback
 
-### REST API Specification
+## REST API Specification
 
 The "REST API Specification" ensures that there is a clear and well-defined contract between these two parties, In the "REST API Specification," we follow two types of contracts:
 
@@ -328,11 +328,11 @@ The "REST API Specification" ensures that there is a clear and well-defined cont
 - [OpenAPI Specification v3.1.0](https://spec.openapis.org/oas/latest.html)
 - [Swagger Editor](https://editor.swagger.io/)
 
-### REST API Security
+## REST API Security
 
 API security is the practice of preventing and mitigating attacks that originate at the API level and it is a crucial pillar of any organization's overall security.
 
-#### Common API Threats and Vulnerabilities
+### Common API Threats and Vulnerabilities
 
 - Poor security hygiene
 - Authentication & Authorization Vulnerabilities
@@ -341,7 +341,7 @@ API security is the practice of preventing and mitigating attacks that originate
 - Improperly set or missing HTTP headers
 - Failure to perform input validation, sanitation and encoding in the method level
 
-#### How to secure REST API?
+### How to secure REST API?
 
 - Authentication
 	- Basic authentication
@@ -393,7 +393,7 @@ API security is the practice of preventing and mitigating attacks that originate
 - X-Powered-By: Info about the web server. Remove because it could be used in simple attacks
 - X-XSS-Protection: Legacy header that tries to mitigate XSS attacks, but makes things worse, so Helmet disables it
 
-### API Management
+## API Management
 
 API management is the organized control of APIs throughout their life cycle, including design, deployment, security, monitoring and monetization.
 

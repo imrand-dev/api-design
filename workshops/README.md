@@ -1,6 +1,6 @@
 <a href="https://www.youtube.com/playlist?list=PL_XxuZqN0xVAWGDKIzcn6NWikVkljJQZc"> <img src="https://i.ibb.co/KqswBh7/image.png" alt=""> </a>
 
-API is a contract between 2 parties.
+API is a Contract between 2 parties.
 
 - Consumer
 - Producer
@@ -13,7 +13,7 @@ API is a contract between 2 parties.
 - Web hook
 - GraphQL
 
-### Why API Design is important?
+### Why API Design is Important?
 
 - Interoperability
 - Abstraction
@@ -43,7 +43,7 @@ API is a contract between 2 parties.
 
 API design is the process of making intentional decisions about how an API will expose data and functionality to its consumers. A successful API design describes the API endpoints, methods, and resources in a standardized specification format.
 
-#### Design Process:
+#### Design Process
 
 Step 1: Determine what the API is intended to do   
 Step 2: Define the API contract with a specification   
